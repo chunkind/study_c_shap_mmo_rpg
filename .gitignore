@@ -12,3 +12,4 @@ Debug/
 */Debug/*
 Assembly-CSharp.csproj
 *.cache
+.vs/
