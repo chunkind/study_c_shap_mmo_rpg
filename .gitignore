@@ -5,3 +5,10 @@ Assets/unity-chan!/
 Temp/UnityLockfile
 Temp/workerlic
 UserSettings/EditorUserSettings.asset
+Temp/
+obj/
+Debug/
+/Debug/
+*/Debug/*
+Assembly-CSharp.csproj
+*.cache
