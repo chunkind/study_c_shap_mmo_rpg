@@ -11,12 +11,22 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    float _yAngle = 0;
+    //float _yAngle = 0;
 
     void Update()
     {
-        _yAngle += Time.deltaTime * 100;
-        transform.eulerAngles = new Vector3(0.0f, _yAngle, 0.0f);
+        //_yAngle += Time.deltaTime * 100;
+
+        //주의 : 아래와 같이는 사용하면 안된다 360가 넘어갈수 있기 때문
+        //transform.eulerAngles += new Vector3(0.0f, Time.deltaTime * 100.0f, 0.0f);
+
+        // 1.절대 회전값 지정
+        //transform.eulerAngles = new Vector3(0.0f, _yAngle, 0.0f);
+
+        // 1. +,- delta 값 기준으로 특정값 회전
+        transform.Rotate(new Vector3(0.0f, Time.deltaTime * 100, 0.0f));
+
+
         if (Input.GetKey(KeyCode.W))
             transform.Translate(Vector3.forward * Time.deltaTime * _speed);
         if (Input.GetKey(KeyCode.S))
