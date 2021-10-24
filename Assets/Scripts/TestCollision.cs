@@ -38,23 +38,9 @@ public class TestCollision : MonoBehaviour
         // Debug.Log(Input.mousePosition); //Screen 좌표 (픽셀좌표)
         // Camera.main.ScreenToViewportPoint(Input.mousePosition); //viewport 좌표(픽셀비율 좌표)
 
-        //원리버전
-        //if (Input.GetMouseButtonDown(0))
-        //{ //0번 :  왼쪽마우스
-        //    Vector3 mousePos = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.nearClipPlane));
-        //    Vector3 dir = mousePos - Camera.main.transform.position;
-        //    dir = dir.normalized;
+        //Tag로 게임 오브잭트 찾기
+        //GameObject.FindGameObjectWithTag
 
-        //    Debug.DrawRay(Camera.main.transform.position, dir * 100.0f, Color.red, 1.0f);
-
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(Camera.main.transform.position, dir, out hit, 100.0f))
-        //    {
-        //        Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
-        //    }
-        //}
-
-        //간략한버전
         if (Input.GetMouseButtonDown(0))
         { //0번 :  왼쪽마우스
 
@@ -62,10 +48,18 @@ public class TestCollision : MonoBehaviour
 
             Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
 
+
+            //old
+            //int mask = (1<<8 | (1<<9));
+
+            //new
+            LayerMask mask = LayerMask.GetMask("Monster","Wall");
+
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 100.0f))
+            if (Physics.Raycast(ray, out hit, 100.0f, mask))
             {
-                Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
+                //Debug.Log($"Raycast Camera @ {hit.collider.gameObject.name}");
+                Debug.Log($"Raycast Camera @ {hit.collider.gameObject.tag}");
             }
         }
 
