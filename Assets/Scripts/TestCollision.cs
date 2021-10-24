@@ -35,5 +35,26 @@ public class TestCollision : MonoBehaviour
     void Update()
     {
         
+
+        Vector3 look = transform.TransformDirection(Vector3.forward);
+        Debug.DrawRay(transform.position + Vector3.up, look * 10, Color.red);
+
+        //raycast 제일 앞에 한물체만
+        /*RaycastHit hit;
+        if (Physics.Raycast(transform.position + Vector3.up, look, out hit, 10))
+        {
+            Debug.Log("Raycast {hit.collider.gameObject.name} !");
+        }*/
+
+
+        //raycast 모든물체
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(transform.position + Vector3.up, look, 10);
+        foreach(RaycastHit h in hits)
+        {
+            Debug.Log($"Raycast {h.collider.gameObject.name}");
+        }
+
+        
     }
 }
