@@ -5,19 +5,26 @@ using UnityEngine;
 public class TestCollision : MonoBehaviour
 {
     /**
-     * 충돌 조건
-     * 1. 나한테 Rigibody 있어야 한다. (IsKinematic : off)
+     * OnCollisionEnter 발생 조건
+     * 1. 나 혹은 상대한테 Rigibody 있어야 한다. (IsKinematic : off)
      * 2. 나한테 Collider가 있어야 한다 (IsTrigger : off)
      * 3. 상대한테 Collider가 있어야 한다 (IsTrigger: off)
      */
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("Collision !");
+        Debug.Log("Collision @ {collision.gameObject.name} !");
     }
 
+    /**
+     * OnTriggerEnter 발생 조건
+     * 1. 둘 다 Collider가 있어야 한다.
+     * 2. 둘 중 하나는 isTrigger : On
+     * 3. 둘 중 하나는 RigidBody가 있어야 한다.
+     */
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger !");
+        
+        Debug.Log("Trigger @ {other.gameObject.name} !");
     }
 
     void Start()
