@@ -8,3 +8,10 @@ study_c_shap_mmo_rpg/.vsconfig
 study_c_shap_mmo_rpg/Assets/Scenes.meta
 study_c_shap_mmo_rpg/Packages/
 study_c_shap_mmo_rpg/UserSettings/
+study_c_shap_mmo_rpg/Assembly-CSharp.csproj
+study_c_shap_mmo_rpg/.vs/study_c_shap_mmo_rpg/v16/.suo
+study_c_shap_mmo_rpg/Assets/Resources.meta
+study_c_shap_mmo_rpg/Assets/Scripts.meta
+study_c_shap_mmo_rpg/Assets/Resources/
+*.meta
+*.cache
