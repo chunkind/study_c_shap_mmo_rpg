@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
         Managers.Input.MouseAction += OnMouseClicked;
     }
 
+    float wait_run_ratio = 0;
     void Update()
     {
         if (_moveToDest)
@@ -29,32 +30,29 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                //规过1
-                /*float moveDist = _speed * Time.deltaTime;
-                if (moveDist >= dir.magnitude)
-                    moveDist = dir.magnitude;*/
-                //规过2
                 float moveDist = Mathf.Clamp(_speed * Time.deltaTime, 0, dir.magnitude);
+                transform.position += dir.normalized * moveDist;
 
-                transform.position += dir.normalized * _speed * Time.deltaTime;
-                transform.LookAt(_destPos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
+                //transform.LookAt(_destPos);
             }
         }
-    }
 
-    void OnMouseClicked(Define.MouseEvent evt)
-    {
-        if (evt != Define.MouseEvent.Click)
-            return;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Wall")))
+        if (_moveToDest)
         {
-            _destPos = hit.point;
-            _moveToDest = true;
+            wait_run_ratio = Mathf.Lerp(wait_run_ratio, 1, 10.0f * Time.deltaTime);
+            Animator anim = GetComponent<Animator>();
+            anim.SetFloat("wait_run_ratio", wait_run_ratio);
+            anim.Play("WAIT_RUN");
         }
+        else
+        {
+            wait_run_ratio = Mathf.Lerp(wait_run_ratio, 0, 10.0f * Time.deltaTime);
+            Animator anim = GetComponent<Animator>();
+            anim.SetFloat("wait_run_ratio", wait_run_ratio);
+            anim.Play("WAIT_RUN");
+        }
+        
     }
 
     void OnKeyboard()
@@ -78,6 +76,19 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.right), 0.2f);
             transform.position += Vector3.right * Time.deltaTime * _speed;
+        }
+        _moveToDest = false;
+    }
+
+    void OnMouseClicked(Define.MouseEvent evt)
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Debug.DrawRay(Camera.main.transform.position, ray.direction * 100.0f, Color.red, 1.0f);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100.0f, LayerMask.GetMask("Wall")))
+        {
+            _destPos = hit.point;
+            _moveToDest = true;
         }
     }
 }
